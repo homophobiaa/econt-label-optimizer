@@ -16,6 +16,11 @@ A static browser tool for optimizing courier label PDFs:
 |-- README.md
 |-- assets
 |   |-- css
+|   |   |-- base.css
+|   |   |-- controls.css
+|   |   |-- layout.css
+|   |   |-- responsive.css
+|   |   |-- results.css
 |   |   `-- styles.css
 |   |-- images
 |   |   `-- kickhub.png

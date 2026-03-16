@@ -1,0 +1,29 @@
+@media (max-width: 980px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .shell {
+    width: min(100% - 18px, 1280px);
+    margin-top: 12px;
+  }
+
+  .panel-body {
+    padding: 18px;
+  }
+
+  .topbar-shell {
+    padding-top: 0;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .labels-grid,
+  .meta-grid {
+    grid-template-columns: 1fr;
+  }
+}
