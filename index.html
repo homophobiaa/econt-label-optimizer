@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Econt Label Optimizer</title>
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+  <div class="blob" aria-hidden="true"></div>
+
+  <main class="shell">
+    <header class="topbar-shell">
+      <div class="brand">
+        <img class="brand-logo" src="./assets/images/kickhub.png" alt="Kickhub logo" />
+        <div class="brand-copy">
+          <p class="brand-title">Label Optimizer</p>
+          <p class="brand-subtitle">Crop, pack, export.</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <aside class="panel">
+        <div class="panel-body">
+          <h2 class="panel-title">Upload and configure</h2>
+
+          <div id="dropZone" class="drop-zone" role="button" tabindex="0" aria-label="Upload PDF files">
+            <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple />
+            <div class="drop-zone-icon">PDF</div>
+            <h2>Drop PDFs</h2>
+            <p>or <strong>click to upload</strong></p>
+          </div>
+
+          <div class="control-grid">
+            <div class="field">
+              <label for="layoutSelect">Labels per page</label>
+              <select id="layoutSelect">
+                <option value="4">4 (2x2)</option>
+                <option value="6" selected>6 (2x3)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="paddingInput">Crop padding (mm)</label>
+              <input id="paddingInput" type="number" min="0" max="20" step="0.5" value="3" />
+            </div>
+
+            <div class="field">
+              <label for="qualitySelect">Detection quality</label>
+              <select id="qualitySelect">
+                <option value="fast">Fast</option>
+                <option value="balanced" selected>Balanced</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="analyzeBtn" class="btn-primary" disabled>Analyze Labels</button>
+            <button id="generateBtn" class="btn-secondary" disabled>Generate Optimized PDF</button>
+            <button id="clearBtn" class="btn-muted">Clear Files</button>
+          </div>
+
+          <div id="status" class="status">Ready. Add one or more PDF files to begin.</div>
+        </div>
+      </aside>
+
+      <section class="panel">
+        <div class="panel-body">
+          <div class="topbar">
+            <div>
+              <h2 class="results-headline">Detected labels</h2>
+            </div>
+            <div class="summary">
+              <div class="pill"><strong id="fileCountPill">0</strong> files</div>
+              <div class="pill"><strong id="pageCountPill">0</strong> labels</div>
+              <div class="pill"><strong id="sheetEstimatePill">0</strong> optimized sheets</div>
+              <div class="pill" id="analysisStatePill">Waiting for analysis</div>
+            </div>
+          </div>
+
+          <div id="results" class="empty-state">
+            <strong>No labels loaded yet.</strong>
+            Add some Econt PDFs on the left, then run analysis to preview the detected crop area for each page.
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="./assets/js/main.js"></script>
+</body>
+</html>
