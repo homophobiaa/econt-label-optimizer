@@ -20,11 +20,21 @@ A static browser tool for optimizing courier label PDFs:
 |   |-- images
 |   |   `-- kickhub.png
 |   `-- js
+|       |-- events.js
 |       |-- main.js
 |       |-- config
 |       |   `-- constants.js
-|       `-- lib
-|           `-- pdf.js
+|       |-- lib
+|       |   `-- pdf.js
+|       |-- pdf
+|       |   |-- analysis.js
+|       |   `-- export.js
+|       |-- state
+|       |   `-- app-state.js
+|       |-- ui
+|       |   `-- render.js
+|       `-- utils
+|           `-- format.js
 `-- Pdfs
     |-- econt.pdf
     |-- econt1.pdf
