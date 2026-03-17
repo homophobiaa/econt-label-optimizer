@@ -15,9 +15,10 @@ export function setStatus(message, tone = "normal") {
 }
 
 export function getLayoutConfig() {
-  return els.layoutSelect.value === "4"
-    ? { cols: 2, rows: 2, perPage: 4 }
-    : { cols: 2, rows: 3, perPage: 6 };
+  const value = els.layoutSelect.value;
+  if (value === "2") return { cols: 1, rows: 2, perPage: 2 };
+  if (value === "4") return { cols: 2, rows: 2, perPage: 4 };
+  return { cols: 2, rows: 3, perPage: 6 };
 }
 
 export function setBusy(busy) {
