@@ -3,6 +3,7 @@ import { pdfjsLib } from "../lib/pdf.js";
 import { state } from "../state/app-state.js";
 import { fileKey } from "../utils/format.js";
 import { renderResults, setBusy, setStatus, updateSummary } from "../ui/render.js";
+import { getSavedAdvanced } from "../ui/preferences.js";
 
 export async function loadSourceBuffer(fileEntry) {
   if (!fileEntry.sourceBuffer) {
@@ -73,7 +74,7 @@ export async function detectCropBox(page, quality, paddingPt) {
   await page.render({ canvasContext: ctx, viewport }).promise;
 
   const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  const whiteThreshold = 245;
+  const whiteThreshold = getSavedAdvanced().whiteThreshold;
   const alphaThreshold = 16;
 
   let minX = canvas.width;

@@ -489,3 +489,169 @@ input[type="text"]:focus {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* ── Prefs extras ── */
+.prefs-hint {
+  font-size: 0.68rem;
+  color: var(--ink-tertiary);
+  line-height: 1.4;
+  margin-top: -2px;
+}
+
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker-row input[type="color"] {
+  width: 40px;
+  height: 40px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  cursor: pointer;
+  appearance: none;
+}
+
+.color-picker-row input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 3px;
+}
+
+.color-picker-row input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 6px;
+}
+
+.color-picker-value {
+  font-family: "SFMono-Regular", "Cascadia Code", "Consolas", monospace;
+  font-size: 0.78rem;
+  color: var(--ink-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* ── Developer console ── */
+.dev-console {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 800;
+  max-height: 260px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(8, 8, 10, 0.95);
+  border-top: 1px solid var(--border-hover);
+  backdrop-filter: blur(16px);
+  font-family: "SFMono-Regular", "Cascadia Code", "Consolas", monospace;
+  font-size: 0.72rem;
+  animation: slideUp 0.25s var(--ease) both;
+}
+
+.dev-console[hidden] {
+  display: none;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.dev-console-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.dev-console-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-tertiary);
+}
+
+.dev-console-title-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.dev-console-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.dev-console-action {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-tertiary);
+  cursor: pointer;
+  transition: color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.dev-console-action svg {
+  width: 14px;
+  height: 14px;
+}
+
+.dev-console-action:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dev-console-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.dev-entry {
+  display: flex;
+  gap: 10px;
+  padding: 3px 14px;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.dev-entry:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.dev-time {
+  flex-shrink: 0;
+  color: var(--ink-tertiary);
+  opacity: 0.6;
+  user-select: none;
+}
+
+.dev-msg {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.dev-info .dev-msg {
+  color: #60a5fa;
+}
+
+.dev-warn .dev-msg {
+  color: #fbbf24;
+}
+
+.dev-error .dev-msg {
+  color: #f87171;
+}

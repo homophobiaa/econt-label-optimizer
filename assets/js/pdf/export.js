@@ -3,7 +3,7 @@ import { PDFDocument, rgb } from "../lib/pdf.js";
 import { els, state } from "../state/app-state.js";
 import { getPdfBytes } from "./analysis.js";
 import { getLayoutConfig, setBusy, setStatus, updateSummary } from "../ui/render.js";
-import { getSavedFilename } from "../ui/preferences.js";
+import { getSavedFilename, getSavedAdvanced } from "../ui/preferences.js";
 
 const GUIDE_COLOR = rgb(0.56, 0.56, 0.56);
 const GUIDE_THICKNESS = 0.8;
@@ -95,8 +95,9 @@ export async function generateOptimizedPdf() {
     const output = await PDFDocument.create();
     const layout = getLayoutConfig();
     const showCutGuides = Boolean(els.cutGuidesToggle?.checked);
-    const margin = 18;
-    const gutter = 10;
+    const advanced = getSavedAdvanced();
+    const margin = advanced.marginPt;
+    const gutter = advanced.gutterPt;
     const cellWidth = (A4_WIDTH - margin * 2 - gutter * (layout.cols - 1)) / layout.cols;
     const cellHeight = (A4_HEIGHT - margin * 2 - gutter * (layout.rows - 1)) / layout.rows;
 
