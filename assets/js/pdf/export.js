@@ -3,6 +3,7 @@ import { PDFDocument, rgb } from "../lib/pdf.js";
 import { els, state } from "../state/app-state.js";
 import { getPdfBytes } from "./analysis.js";
 import { getLayoutConfig, setBusy, setStatus, updateSummary } from "../ui/render.js";
+import { getSavedFilename } from "../ui/preferences.js";
 
 const GUIDE_COLOR = rgb(0.56, 0.56, 0.56);
 const GUIDE_THICKNESS = 0.8;
@@ -142,15 +143,16 @@ export async function generateOptimizedPdf() {
     const blob = new Blob([bytes], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
+    const outputName = getSavedFilename() + ".pdf";
     link.href = url;
-    link.download = "optimized-econt-labels.pdf";
+    link.download = outputName;
     document.body.appendChild(link);
     link.click();
     link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 30000);
 
     setStatus(
-      "Done. Generated optimized-econt-labels.pdf with " + printableLabels.length + " label" +
+      "Done. Generated " + outputName + " with " + printableLabels.length + " label" +
       (printableLabels.length === 1 ? "" : "s") + ".",
       "success"
     );

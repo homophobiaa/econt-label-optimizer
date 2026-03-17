@@ -77,7 +77,8 @@ label {
 }
 
 select,
-input[type="number"] {
+input[type="number"],
+input[type="text"] {
   width: 100%;
   height: 40px;
   border: 1px solid var(--border);
@@ -100,7 +101,8 @@ select {
 }
 
 select:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="text"]:focus {
   border-color: var(--border-accent);
   box-shadow: 0 0 0 3px var(--accent-muted);
   background: rgba(18, 18, 22, 0.95);
@@ -288,4 +290,202 @@ input[type="number"]:focus {
 .status-bar.is-success {
   color: var(--success);
   background: rgba(74, 222, 128, 0.06);
+}
+
+/* ── Preferences overlay ── */
+.prefs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  opacity: 1;
+  transition: opacity 0.25s var(--ease);
+}
+
+.prefs-overlay[hidden] {
+  display: none;
+}
+
+.prefs-overlay.is-closing {
+  opacity: 0;
+}
+
+.prefs-overlay.is-closing .prefs-panel {
+  transform: translateY(12px) scale(0.97);
+  opacity: 0;
+}
+
+/* ── Preferences panel ── */
+.prefs-panel {
+  width: min(480px, 100%);
+  max-height: calc(100dvh - 48px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), 0 0 80px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  animation: modalIn 0.3s var(--ease) both;
+}
+
+@keyframes modalIn {
+  from {
+    transform: translateY(16px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ── Prefs header ── */
+.prefs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.prefs-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prefs-title-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.prefs-close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink-tertiary);
+  cursor: pointer;
+  transition: color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.prefs-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.prefs-close:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Prefs body ── */
+.prefs-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.prefs-section {
+  padding: 16px 24px;
+}
+
+.prefs-section + .prefs-section {
+  border-top: 1px solid var(--border);
+}
+
+.prefs-section-title {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.prefs-section-desc {
+  margin: 0 0 16px;
+  font-size: 0.75rem;
+  color: var(--ink-tertiary);
+  line-height: 1.5;
+}
+
+.prefs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.prefs-field {
+  display: grid;
+  gap: 6px;
+}
+
+.prefs-field--full {
+  grid-column: 1 / -1;
+}
+
+.prefs-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  padding: 0;
+  height: 100%;
+}
+
+/* ── Prefs footer ── */
+.prefs-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.prefs-footer .btn--accent {
+  min-width: 150px;
+}
+
+/* ── Toast ── */
+.prefs-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 950;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #091f10;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow: 0 8px 30px rgba(52, 208, 88, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), transform 0.3s var(--ease-bounce);
+}
+
+.prefs-toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }

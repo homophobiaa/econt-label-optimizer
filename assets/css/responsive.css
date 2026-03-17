@@ -61,4 +61,31 @@
   .brand-title {
     font-size: 1rem;
   }
+
+  .prefs-panel {
+    max-height: calc(100dvh - 32px);
+  }
+
+  .prefs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prefs-header,
+  .prefs-section,
+  .prefs-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .prefs-footer {
+    flex-direction: column;
+  }
+
+  .prefs-footer .btn {
+    width: 100%;
+  }
+
+  .prefs-overlay {
+    padding: 12px;
+  }
 }
