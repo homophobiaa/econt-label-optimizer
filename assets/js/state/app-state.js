@@ -15,6 +15,7 @@ export const els = {
   layoutSelect: document.getElementById("layoutSelect"),
   paddingInput: document.getElementById("paddingInput"),
   qualitySelect: document.getElementById("qualitySelect"),
+  cutGuidesToggle: document.getElementById("cutGuidesToggle"),
   status: document.getElementById("status"),
   results: document.getElementById("results"),
   fileCountPill: document.getElementById("fileCountPill"),

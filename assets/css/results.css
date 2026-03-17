@@ -27,6 +27,8 @@
   border-radius: 999px;
   font-size: 0.8rem;
   color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .pill strong {
@@ -96,8 +98,10 @@
 
 .label-title {
   margin: 0;
+  font-family: var(--font-display);
   font-size: 0.98rem;
   line-height: 1.45;
+  letter-spacing: -0.03em;
   word-break: break-word;
 }
 
@@ -120,12 +124,15 @@
   font-size: 0.74rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  font-weight: 700;
 }
 
 .meta-value {
   margin-top: 6px;
   font-size: 0.84rem;
   line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   word-break: break-word;
 }
 
@@ -138,6 +145,7 @@
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .badge::before {
