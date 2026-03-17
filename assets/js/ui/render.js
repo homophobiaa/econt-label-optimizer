@@ -3,7 +3,7 @@ import { escapeHtml, formatBytes, formatCropBox } from "../utils/format.js";
 
 export function setStatus(message, tone = "normal") {
   els.status.textContent = message;
-  els.status.className = "status";
+  els.status.className = "status-bar";
 
   if (tone === "warn") {
     els.status.classList.add("is-warn");
@@ -39,15 +39,24 @@ export function updateSummary() {
   els.sheetEstimatePill.textContent = printableLabels.length
     ? String(Math.ceil(printableLabels.length / layout.perPage))
     : "0";
-  els.analysisStatePill.textContent = state.analyzed ? "Analysis complete" : "Waiting for analysis";
+
+  const pillText = state.analyzed ? "Complete" : "Waiting";
+  els.analysisStatePill.innerHTML = '<span class="stat-dot"></span>' + escapeHtml(pillText);
+  els.analysisStatePill.classList.toggle("is-complete", state.analyzed);
 
   setBusy(state.busy);
 }
 
 function createEmptyState(title, copy) {
   els.results.innerHTML = `
+    <div class="empty-state-icon">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <rect x="8" y="6" width="48" height="52" rx="6" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+        <path d="M24 28l8-8 8 8M32 20v20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+      </svg>
+    </div>
     <strong>${escapeHtml(title)}</strong>
-    ${escapeHtml(copy)}
+    <p>${escapeHtml(copy)}</p>
   `;
   els.results.className = "empty-state";
 }
@@ -55,16 +64,16 @@ function createEmptyState(title, copy) {
 export function renderResults() {
   if (!state.files.length) {
     createEmptyState(
-      "No labels loaded yet.",
-      "Add some Econt PDFs on the left, then run analysis to preview the detected crop area for each page."
+      "No labels loaded yet",
+      "Upload Econt PDFs, then run analysis to preview detected crop areas."
     );
     return;
   }
 
   if (!state.labels.length) {
     createEmptyState(
-      "Files loaded. Analysis pending.",
-      "Your PDFs are ready. Click Analyze Labels to render the pages and detect the actual printable label bounds."
+      "Files loaded — analysis pending",
+      "Your PDFs are ready. Click Analyze Labels to detect the printable label bounds."
     );
     return;
   }
@@ -73,10 +82,10 @@ export function renderResults() {
     const cropBox = label.cropBox;
     const cropText = cropBox
       ? formatCropBox(cropBox)
-      : "No non-white label area detected";
+      : "No label area detected";
     const statusBadge = cropBox
-      ? '<div class="badge badge-success">Ready for export</div>'
-      : '<div class="badge badge-warn">Detection failed</div>';
+      ? '<div class="badge badge-success">Ready</div>'
+      : '<div class="badge badge-warn">Failed</div>';
 
     return `
       <article class="label-card">
@@ -84,7 +93,7 @@ export function renderResults() {
           ${
             label.previewDataUrl
               ? `<canvas id="preview-${index}" aria-label="Preview for ${escapeHtml(label.fileName)} page ${label.pageNumber}"></canvas>`
-              : '<div class="label-preview-placeholder">Preview becomes available after analysis.</div>'
+              : '<div class="label-preview-placeholder">Preview available after analysis</div>'
           }
         </div>
         <div class="label-body">
@@ -92,16 +101,16 @@ export function renderResults() {
           <div class="label-subtitle">Page ${label.pageNumber} of ${label.pageCount}</div>
           <div class="meta-grid">
             <div class="meta">
-              <div class="meta-label">File size</div>
+              <div class="meta-label">Size</div>
               <div class="meta-value">${escapeHtml(formatBytes(label.fileSize))}</div>
             </div>
             <div class="meta">
-              <div class="meta-label">Crop box</div>
+              <div class="meta-label">Crop</div>
               <div class="meta-value">${escapeHtml(cropText)}</div>
             </div>
             <div class="meta">
-              <div class="meta-label">Source page</div>
-              <div class="meta-value">${label.sourceWidth.toFixed(1)} x ${label.sourceHeight.toFixed(1)} pt</div>
+              <div class="meta-label">Source</div>
+              <div class="meta-value">${label.sourceWidth.toFixed(1)} &times; ${label.sourceHeight.toFixed(1)} pt</div>
             </div>
             <div class="meta">
               <div class="meta-label">Coverage</div>

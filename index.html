@@ -15,86 +15,98 @@
       <div class="brand">
         <img class="brand-logo" src="./assets/images/kickhub.svg" alt="Kickhub logo" />
         <div class="brand-copy">
-          <p class="brand-title">Label Optimizer</p>
+          <h1 class="brand-title">Label Optimizer</h1>
           <p class="brand-subtitle">Crop, pack, export.</p>
         </div>
       </div>
+      <nav class="header-stats">
+        <div class="stat-chip"><span class="stat-value" id="fileCountPill">0</span><span class="stat-label">files</span></div>
+        <div class="stat-chip"><span class="stat-value" id="pageCountPill">0</span><span class="stat-label">labels</span></div>
+        <div class="stat-chip"><span class="stat-value" id="sheetEstimatePill">0</span><span class="stat-label">sheets</span></div>
+        <div class="stat-chip stat-chip--status" id="analysisStatePill"><span class="stat-dot"></span>Waiting</div>
+      </nav>
     </header>
 
     <section class="workspace">
-      <aside class="panel">
-        <div class="panel-body">
-          <h2 class="panel-title">Upload and configure</h2>
-
+      <aside class="sidebar">
+        <div class="sidebar-section">
           <div id="dropZone" class="drop-zone" role="button" tabindex="0" aria-label="Upload PDF files">
             <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple />
-            <div class="drop-zone-icon">PDF</div>
-            <h2>Drop PDFs</h2>
-            <p>or <strong>click to upload</strong></p>
+            <div class="drop-zone-visual">
+              <svg class="drop-zone-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <rect x="6" y="4" width="36" height="40" rx="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 20l8-8 8 8M24 12v20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="drop-zone-title">Drop PDFs here</span>
+              <span class="drop-zone-hint">or click to browse</span>
+            </div>
           </div>
+        </div>
 
+        <div class="sidebar-section">
+          <h2 class="section-title">Settings</h2>
           <div class="control-grid">
             <div class="field">
               <label for="layoutSelect">Labels per page</label>
               <select id="layoutSelect">
-                <option value="4">4 (2x2)</option>
-                <option value="6" selected>6 (2x3)</option>
+                <option value="4">4 &mdash; 2 &times; 2</option>
+                <option value="6" selected>6 &mdash; 2 &times; 3</option>
               </select>
             </div>
 
-            <div class="field">
-              <label for="paddingInput">Crop padding (mm)</label>
-              <input id="paddingInput" type="number" min="0" max="20" step="0.5" value="3" />
+            <div class="field-row">
+              <div class="field field--half">
+                <label for="paddingInput">Padding (mm)</label>
+                <input id="paddingInput" type="number" min="0" max="20" step="0.5" value="3" />
+              </div>
+              <div class="field field--half">
+                <label for="qualitySelect">Quality</label>
+                <select id="qualitySelect">
+                  <option value="fast">Fast</option>
+                  <option value="balanced" selected>Balanced</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="qualitySelect">Detection quality</label>
-              <select id="qualitySelect">
-                <option value="fast">Fast</option>
-                <option value="balanced" selected>Balanced</option>
-                <option value="high">High</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label class="toggle-row" for="cutGuidesToggle">
-                <span>Add cut guides</span>
-                <span class="toggle-control">
-                  <input id="cutGuidesToggle" class="toggle-input" type="checkbox" />
-                  <span class="toggle-ui" aria-hidden="true"></span>
-                </span>
-              </label>
-            </div>
+            <label class="toggle-row" for="cutGuidesToggle">
+              <span>Cut guides</span>
+              <span class="toggle-control">
+                <input id="cutGuidesToggle" class="toggle-input" type="checkbox" />
+                <span class="toggle-ui" aria-hidden="true"></span>
+              </span>
+            </label>
           </div>
-
-          <div class="actions">
-            <button id="analyzeBtn" class="btn-primary" disabled>Analyze Labels</button>
-            <button id="generateBtn" class="btn-secondary" disabled>Generate Optimized PDF</button>
-            <button id="clearBtn" class="btn-muted">Clear Files</button>
-          </div>
-
-          <div id="status" class="status">Ready. Add one or more PDF files to begin.</div>
         </div>
+
+        <div class="sidebar-section sidebar-section--actions">
+          <button id="analyzeBtn" class="btn btn--primary" disabled>
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 3v5l3.5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Analyze Labels
+          </button>
+          <button id="generateBtn" class="btn btn--accent" disabled>
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="none"><path d="M10 2v12m0 0l-4-4m4 4l4-4M4 18h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Generate PDF
+          </button>
+          <button id="clearBtn" class="btn btn--ghost">Clear All</button>
+        </div>
+
+        <div id="status" class="status-bar">Ready &mdash; add PDF files to begin.</div>
       </aside>
 
-      <section class="panel">
-        <div class="panel-body">
-          <div class="topbar">
-            <div>
-              <h2 class="results-headline">Detected labels</h2>
-            </div>
-            <div class="summary">
-              <div class="pill"><strong id="fileCountPill">0</strong> files</div>
-              <div class="pill"><strong id="pageCountPill">0</strong> labels</div>
-              <div class="pill"><strong id="sheetEstimatePill">0</strong> optimized sheets</div>
-              <div class="pill" id="analysisStatePill">Waiting for analysis</div>
-            </div>
+      <section class="main-panel">
+        <div class="main-panel-header">
+          <h2 class="main-panel-title">Detected Labels</h2>
+        </div>
+        <div id="results" class="empty-state">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <rect x="8" y="6" width="48" height="52" rx="6" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+              <path d="M24 28l8-8 8 8M32 20v20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
+            </svg>
           </div>
-
-          <div id="results" class="empty-state">
-            <strong>No labels loaded yet.</strong>
-            Add some Econt PDFs on the left, then run analysis to preview the detected crop area for each page.
-          </div>
+          <strong>No labels loaded yet</strong>
+          <p>Upload Econt PDFs, then run analysis to preview detected crop areas.</p>
         </div>
       </section>
     </section>
