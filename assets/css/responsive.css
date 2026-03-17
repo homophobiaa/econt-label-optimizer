@@ -13,8 +13,8 @@
     gap: 12px;
   }
 
-  .header-stats {
-    justify-content: flex-start;
+  .stats-bar {
+    width: 100%;
   }
 }
 
@@ -40,9 +40,17 @@
     grid-template-columns: 1fr;
   }
 
-  .stat-chip {
-    padding: 5px 10px;
-    font-size: 0.7rem;
+  .stats-bar {
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    padding: 8px 12px;
+    font-size: 0.65rem;
+  }
+
+  .stat-num {
+    font-size: 0.82rem;
   }
 
   .brand-logo {

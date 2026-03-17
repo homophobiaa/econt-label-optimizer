@@ -12,6 +12,7 @@
   background: var(--surface);
   backdrop-filter: blur(12px);
   min-height: 320px;
+  animation: fadeInUp 0.4s var(--ease) both;
 }
 
 .empty-state-icon {
@@ -56,11 +57,18 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  animation: fadeInUp 0.35s var(--ease) both;
 }
 
+.label-card:nth-child(2) { animation-delay: 0.04s; }
+.label-card:nth-child(3) { animation-delay: 0.08s; }
+.label-card:nth-child(4) { animation-delay: 0.12s; }
+.label-card:nth-child(5) { animation-delay: 0.16s; }
+.label-card:nth-child(6) { animation-delay: 0.20s; }
+
 .label-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px) scale(1.01);
   border-color: var(--border-hover);
   box-shadow: var(--shadow-md);
 }
@@ -70,9 +78,10 @@
   position: relative;
   padding: 12px;
   min-height: 180px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.25);
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .label-preview canvas {
@@ -171,9 +180,11 @@
 .badge-success {
   color: var(--success);
   background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.15);
 }
 
 .badge-warn {
   color: var(--warning);
   background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.15);
 }
