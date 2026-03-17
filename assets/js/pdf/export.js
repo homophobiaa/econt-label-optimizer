@@ -1,7 +1,7 @@
 import { A4_HEIGHT, A4_WIDTH } from "../config/constants.js";
 import { PDFDocument, rgb } from "../lib/pdf.js";
 import { els, state } from "../state/app-state.js";
-import { getPdfBytes } from "./analysis.js";
+import { getPdfBytes } from "./file-io.js";
 import { getLayoutConfig, setBusy, setStatus, updateSummary } from "../ui/render.js";
 import { getSavedFilename, getSavedAdvanced } from "../ui/preferences.js";
 

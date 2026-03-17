@@ -28,7 +28,3 @@ export function formatCropBox(cropBox) {
     toMillimeters(cropBox.height).toFixed(1) + " mm"
   );
 }
-
-export function fileKey(file) {
-  return [file.name, file.size, file.lastModified].join("__");
-}

@@ -1,21 +1,11 @@
 import { MM_TO_PT, QUALITY_SCALE, QUALITY_STEP } from "../config/constants.js";
 import { pdfjsLib } from "../lib/pdf.js";
 import { state } from "../state/app-state.js";
-import { fileKey } from "../utils/format.js";
+import { getPdfBytes, dedupeFiles } from "./file-io.js";
 import { renderResults, setBusy, setStatus, updateSummary } from "../ui/render.js";
 import { getSavedAdvanced } from "../ui/preferences.js";
 
-export async function loadSourceBuffer(fileEntry) {
-  if (!fileEntry.sourceBuffer) {
-    fileEntry.sourceBuffer = await fileEntry.file.arrayBuffer();
-  }
-  return fileEntry.sourceBuffer;
-}
-
-export async function getPdfBytes(fileEntry) {
-  const sourceBuffer = await loadSourceBuffer(fileEntry);
-  return new Uint8Array(sourceBuffer.slice(0));
-}
+export { getPdfBytes };
 
 export function resetAnalysis() {
   state.labels = [];
@@ -34,24 +24,9 @@ export function dedupeAndAddFiles(fileList) {
     return;
   }
 
-  const existing = new Set(state.files.map((entry) => fileKey(entry.file)));
-  let added = 0;
+  const added = dedupeFiles(incoming);
 
-  for (const file of incoming) {
-    const key = fileKey(file);
-    if (existing.has(key)) continue;
-
-    state.files.push({
-      id: crypto.randomUUID(),
-      file,
-      sourceBuffer: null,
-      pageCount: 0,
-    });
-    existing.add(key);
-    added += 1;
-  }
-
-  if (!added) {
+  if (!added.length) {
     setStatus("Those files are already loaded.", "warn");
     return;
   }
@@ -59,7 +34,7 @@ export function dedupeAndAddFiles(fileList) {
   resetAnalysis();
   renderResults();
   updateSummary();
-  setStatus("Added " + added + " PDF file" + (added === 1 ? "" : "s") + ". Run analysis next.");
+  setStatus("Added " + added.length + " PDF file" + (added.length === 1 ? "" : "s") + ". Run analysis next.");
 }
 
 export async function detectCropBox(page, quality, paddingPt) {

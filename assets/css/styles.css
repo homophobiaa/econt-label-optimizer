@@ -3,5 +3,8 @@
 @import "./base.css";
 @import "./layout.css";
 @import "./controls.css";
+@import "./animations.css";
+@import "./preferences.css";
+@import "./dev-console.css";
 @import "./results.css";
 @import "./responsive.css";
