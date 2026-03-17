@@ -114,6 +114,8 @@
   letter-spacing: -0.02em;
   word-break: break-word;
   color: var(--ink);
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .label-subtitle {
@@ -154,6 +156,8 @@
   color: var(--ink-secondary);
   font-variant-numeric: tabular-nums;
   word-break: break-word;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 /* ── Badge ── */
