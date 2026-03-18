@@ -149,6 +149,40 @@
   text-transform: none;
 }
 
+.stat--saved {
+  gap: 7px;
+}
+
+.stat--saved .stat-num {
+  color: var(--accent);
+  transition: color 0.3s var(--ease);
+}
+
+.eco-leaf {
+  width: 15px;
+  height: 15px;
+  color: var(--ink-tertiary);
+  flex-shrink: 0;
+  transition: color 0.4s var(--ease), filter 0.4s var(--ease);
+}
+
+.stat--saved.is-saving {
+  color: var(--accent);
+}
+
+.stat--saved.is-saving .eco-leaf {
+  color: var(--accent);
+  filter: drop-shadow(0 0 4px rgba(52, 208, 88, 0.45));
+  animation: eco-sway 2.8s ease-in-out infinite;
+}
+
+@keyframes eco-sway {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25%      { transform: rotate(-8deg) scale(1.08); }
+  50%      { transform: rotate(4deg) scale(1.04); }
+  75%      { transform: rotate(-3deg) scale(1.06); }
+}
+
 .stat--status {
   align-items: center;
   gap: 8px;

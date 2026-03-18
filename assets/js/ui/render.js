@@ -35,11 +35,15 @@ export function updateSummary() {
   const printableLabels = state.labels.filter((label) => label.cropBox);
   const layout = getLayoutConfig();
 
+  const labelCount = printableLabels.length;
+  const sheets = labelCount ? Math.ceil(labelCount / layout.perPage) : 0;
+  const saved = labelCount ? labelCount - sheets : 0;
+
   els.fileCountPill.textContent = String(state.files.length);
-  els.pageCountPill.textContent = String(printableLabels.length);
-  els.sheetEstimatePill.textContent = printableLabels.length
-    ? String(Math.ceil(printableLabels.length / layout.perPage))
-    : "0";
+  els.pageCountPill.textContent = String(labelCount);
+  els.sheetEstimatePill.textContent = String(sheets);
+  els.savedPill.textContent = String(saved);
+  els.savedPill.closest(".stat").classList.toggle("is-saving", saved > 0);
 
   const pillText = state.analyzed ? "Complete" : "Waiting";
   els.analysisStatePill.innerHTML = '<span class="stat-dot"></span>' + escapeHtml(pillText);

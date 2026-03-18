@@ -21,6 +21,7 @@ export const els = {
   fileCountPill: document.getElementById("fileCountPill"),
   pageCountPill: document.getElementById("pageCountPill"),
   sheetEstimatePill: document.getElementById("sheetEstimatePill"),
+  savedPill: document.getElementById("savedPill"),
   analysisStatePill: document.getElementById("analysisStatePill"),
   settingsBtn: document.getElementById("settingsBtn"),
   prefsOverlay: document.getElementById("prefsOverlay"),
