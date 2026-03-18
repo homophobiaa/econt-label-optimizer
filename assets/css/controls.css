@@ -59,6 +59,50 @@
   font-weight: 500;
 }
 
+/* ── URL input ── */
+.url-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.url-field {
+  flex: 1;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.78rem;
+  padding: 0 12px;
+  outline: none;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.url-field::placeholder {
+  color: var(--ink-tertiary);
+  font-weight: 500;
+}
+
+.url-field:focus {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 0 3px var(--accent-muted);
+}
+
+.url-btn {
+  height: 36px;
+  width: 36px;
+  min-width: 36px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.url-btn .btn-icon {
+  width: 14px;
+  height: 14px;
+}
+
 /* ── Control grid ── */
 .control-grid {
   display: grid;

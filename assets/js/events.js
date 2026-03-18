@@ -2,6 +2,7 @@ import { els, state } from "./state/app-state.js";
 import { dedupeAndAddFiles, analyzeFiles, resetAnalysis } from "./pdf/analysis.js";
 import { generateOptimizedPdf } from "./pdf/export.js";
 import { renderResults, setStatus, updateSummary } from "./ui/render.js";
+import { fetchPdfFromUrl } from "./pdf/file-io.js";
 import {
   bindBlobTracking,
   createDragOverlay,
@@ -96,6 +97,39 @@ function bindDropZone() {
   });
 }
 
+async function loadFromUrl() {
+  const url = els.urlInput.value.trim();
+  if (!url) return;
+  if (state.busy) return;
+
+  els.urlBtn.disabled = true;
+  setStatus("Fetching PDF from URL\u2026");
+
+  try {
+    const file = await fetchPdfFromUrl(url);
+    dedupeAndAddFiles([file]);
+    els.urlInput.value = "";
+  } catch (err) {
+    setStatus(err.message, "error");
+  } finally {
+    els.urlBtn.disabled = false;
+  }
+}
+
+function bindUrlInput() {
+  els.urlBtn.addEventListener("click", loadFromUrl);
+  els.urlInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      loadFromUrl();
+    }
+  });
+
+  // Stop click / keyboard from bubbling to the drop zone
+  els.urlInput.addEventListener("click", (e) => e.stopPropagation());
+  els.urlBtn.addEventListener("click", (e) => e.stopPropagation());
+}
+
 function bindActions() {
   els.analyzeBtn.addEventListener("click", () => {
     analyzeFiles(els.qualitySelect.value, els.paddingInput.value);
@@ -114,5 +148,6 @@ function bindActions() {
 export function bindEvents() {
   bindBlobTracking();
   bindDropZone();
+  bindUrlInput();
   bindActions();
 }

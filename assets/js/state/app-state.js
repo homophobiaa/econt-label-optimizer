@@ -45,4 +45,6 @@ export const els = {
   devConsoleLog: document.getElementById("devConsoleLog"),
   devClearBtn: document.getElementById("devClearBtn"),
   devCloseBtn: document.getElementById("devCloseBtn"),
+  urlInput: document.getElementById("urlInput"),
+  urlBtn: document.getElementById("urlBtn"),
 };
