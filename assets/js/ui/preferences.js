@@ -4,8 +4,8 @@ import { updateSummary } from "./render.js";
 const STORAGE_KEY = "econt-label-prefs";
 
 const FACTORY_DEFAULTS = {
-  layout: "6",
-  padding: "8",
+  layout: "4",
+  padding: "4",
   quality: "balanced",
   cutGuides: true,
   filename: "optimized-econt-labels",
