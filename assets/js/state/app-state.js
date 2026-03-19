@@ -11,6 +11,7 @@ export const els = {
   fileInput: document.getElementById("fileInput"),
   analyzeBtn: document.getElementById("analyzeBtn"),
   generateBtn: document.getElementById("generateBtn"),
+  printBtn: document.getElementById("printBtn"),
   clearBtn: document.getElementById("clearBtn"),
   layoutSelect: document.getElementById("layoutSelect"),
   paddingInput: document.getElementById("paddingInput"),

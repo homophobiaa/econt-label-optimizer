@@ -28,6 +28,7 @@ export function setBusy(busy) {
 
   els.analyzeBtn.disabled = busy || !hasFiles;
   els.generateBtn.disabled = busy || !hasPrintableLabels;
+  els.printBtn.disabled = busy || !hasPrintableLabels;
   els.clearBtn.disabled = busy || (!hasFiles && !state.labels.length);
 }
 

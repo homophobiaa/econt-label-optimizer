@@ -135,7 +135,8 @@ function bindActions() {
     analyzeFiles(els.qualitySelect.value, els.paddingInput.value);
   });
 
-  els.generateBtn.addEventListener("click", generateOptimizedPdf);
+  els.generateBtn.addEventListener("click", () => generateOptimizedPdf());
+  els.printBtn.addEventListener("click", () => generateOptimizedPdf({ print: true }));
   els.clearBtn.addEventListener("click", clearAll);
   els.layoutSelect.addEventListener("change", () => {
     updateSummary();

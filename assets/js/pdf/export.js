@@ -81,7 +81,7 @@ function drawCutGuides(page, layout, margin, gutter, cellWidth, cellHeight) {
   }
 }
 
-export async function generateOptimizedPdf() {
+export async function generateOptimizedPdf({ print = false } = {}) {
   const printableLabels = state.labels.filter((label) => label.cropBox);
   if (!printableLabels.length) {
     setStatus("Analyze the PDFs first and make sure labels were detected.", "warn");
@@ -143,20 +143,37 @@ export async function generateOptimizedPdf() {
     const bytes = await output.save();
     const blob = new Blob([bytes], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    const outputName = getSavedFilename() + ".pdf";
-    link.href = url;
-    link.download = outputName;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 30000);
 
-    setStatus(
-      "Done. Generated " + outputName + " with " + printableLabels.length + " label" +
-      (printableLabels.length === 1 ? "" : "s") + ".",
-      "success"
-    );
+    if (print) {
+      const iframe = document.createElement("iframe");
+      iframe.style.cssText = "position:fixed;left:-9999px;width:0;height:0;border:none;";
+      iframe.src = url;
+      document.body.appendChild(iframe);
+      iframe.onload = () => {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+        setTimeout(() => { iframe.remove(); URL.revokeObjectURL(url); }, 60000);
+      };
+      setStatus(
+        "Print dialog opened for " + printableLabels.length + " label" +
+        (printableLabels.length === 1 ? "" : "s") + ".",
+        "success"
+      );
+    } else {
+      const link = document.createElement("a");
+      const outputName = getSavedFilename() + ".pdf";
+      link.href = url;
+      link.download = outputName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+      setStatus(
+        "Done. Generated " + outputName + " with " + printableLabels.length + " label" +
+        (printableLabels.length === 1 ? "" : "s") + ".",
+        "success"
+      );
+    }
   } catch (error) {
     console.error(error);
     setStatus("Generation failed: " + (error.message || "Unknown error"), "error");
