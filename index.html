@@ -93,6 +93,14 @@
                 <span class="toggle-ui" aria-hidden="true"></span>
               </span>
             </label>
+
+            <label class="toggle-row" for="epsonMarksToggle">
+              <span>Epson color maintenance marks</span>
+              <span class="toggle-control">
+                <input id="epsonMarksToggle" class="toggle-input" type="checkbox" checked />
+                <span class="toggle-ui" aria-hidden="true"></span>
+              </span>
+            </label>
           </div>
         </div>
 
@@ -261,6 +269,44 @@
                 </span>
               </label>
               <span class="prefs-hint">Show an in-app log panel for debugging</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="prefs-section">
+          <h3 class="prefs-section-title">Printer Maintenance</h3>
+          <p class="prefs-section-desc">Tiny CMY color blocks printed at the top-left of every page to keep Epson color nozzles active.</p>
+          <div class="prefs-grid">
+            <div class="prefs-field prefs-field--full">
+              <label class="prefs-toggle-row" for="prefEpsonMarks">
+                <span>Epson color maintenance marks</span>
+                <span class="toggle-control">
+                  <input id="prefEpsonMarks" class="toggle-input" type="checkbox" />
+                  <span class="toggle-ui" aria-hidden="true"></span>
+                </span>
+              </label>
+            </div>
+            <div class="prefs-field">
+              <label for="prefEpsonMarksTopMm">Top offset (mm)</label>
+              <input id="prefEpsonMarksTopMm" type="number" min="0" max="50" step="0.5" />
+              <span class="prefs-hint">Distance from the top edge of the page</span>
+            </div>
+            <div class="prefs-field">
+              <label for="prefEpsonMarksLeftMm">Left offset (mm)</label>
+              <input id="prefEpsonMarksLeftMm" type="number" min="0" max="50" step="0.5" />
+              <span class="prefs-hint">Distance from the left edge of the page</span>
+            </div>
+            <div class="prefs-field">
+              <label for="prefEpsonMarkWidthMm">Mark width (mm)</label>
+              <input id="prefEpsonMarkWidthMm" type="number" min="0.1" max="20" step="0.1" />
+            </div>
+            <div class="prefs-field">
+              <label for="prefEpsonMarkHeightMm">Mark height (mm)</label>
+              <input id="prefEpsonMarkHeightMm" type="number" min="0.1" max="10" step="0.1" />
+            </div>
+            <div class="prefs-field">
+              <label for="prefEpsonMarkGapMm">Gap between marks (mm)</label>
+              <input id="prefEpsonMarkGapMm" type="number" min="0" max="20" step="0.1" />
             </div>
           </div>
         </section>

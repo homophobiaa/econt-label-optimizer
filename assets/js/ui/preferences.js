@@ -1,5 +1,13 @@
 import { els } from "../state/app-state.js";
 import { updateSummary } from "./render.js";
+import {
+  EPSON_MAINTENANCE_MARKS_DEFAULT_ENABLED,
+  EPSON_MAINTENANCE_MARKS_TOP_MM,
+  EPSON_MAINTENANCE_MARKS_LEFT_MM,
+  EPSON_MAINTENANCE_MARK_WIDTH_MM,
+  EPSON_MAINTENANCE_MARK_HEIGHT_MM,
+  EPSON_MAINTENANCE_MARK_GAP_MM,
+} from "../config/constants.js";
 
 const STORAGE_KEY = "econt-label-prefs";
 
@@ -8,6 +16,12 @@ const FACTORY_DEFAULTS = {
   padding: "4",
   quality: "balanced",
   cutGuides: true,
+  epsonMarks: EPSON_MAINTENANCE_MARKS_DEFAULT_ENABLED,
+  epsonMarksTopMm: EPSON_MAINTENANCE_MARKS_TOP_MM,
+  epsonMarksLeftMm: EPSON_MAINTENANCE_MARKS_LEFT_MM,
+  epsonMarkWidthMm: EPSON_MAINTENANCE_MARK_WIDTH_MM,
+  epsonMarkHeightMm: EPSON_MAINTENANCE_MARK_HEIGHT_MM,
+  epsonMarkGapMm: EPSON_MAINTENANCE_MARK_GAP_MM,
   filename: "optimized-econt-labels",
   accentColor: "#34d058",
   blob: true,
@@ -47,6 +61,17 @@ export function getSavedAdvanced() {
   };
 }
 
+export function getSavedEpsonMarksConfig() {
+  const prefs = load() || FACTORY_DEFAULTS;
+  return {
+    topMm: Number(prefs.epsonMarksTopMm) || FACTORY_DEFAULTS.epsonMarksTopMm,
+    leftMm: Number(prefs.epsonMarksLeftMm) || FACTORY_DEFAULTS.epsonMarksLeftMm,
+    widthMm: Number(prefs.epsonMarkWidthMm) || FACTORY_DEFAULTS.epsonMarkWidthMm,
+    heightMm: Number(prefs.epsonMarkHeightMm) || FACTORY_DEFAULTS.epsonMarkHeightMm,
+    gapMm: Number(prefs.epsonMarkGapMm) || FACTORY_DEFAULTS.epsonMarkGapMm,
+  };
+}
+
 /* ── Accent colour system ── */
 function hexToRgb(hex) {
   const n = parseInt(hex.slice(1), 16);
@@ -81,6 +106,7 @@ function applyToSidebar(prefs) {
   els.paddingInput.value = prefs.padding;
   els.qualitySelect.value = prefs.quality;
   els.cutGuidesToggle.checked = prefs.cutGuides;
+  els.epsonMarksToggle.checked = prefs.epsonMarks;
   updateSummary();
 }
 
@@ -89,6 +115,12 @@ function populatePanel(prefs) {
   els.prefPadding.value = prefs.padding;
   els.prefQuality.value = prefs.quality;
   els.prefCutGuides.checked = prefs.cutGuides;
+  els.prefEpsonMarks.checked = prefs.epsonMarks;
+  els.prefEpsonMarksTopMm.value = prefs.epsonMarksTopMm;
+  els.prefEpsonMarksLeftMm.value = prefs.epsonMarksLeftMm;
+  els.prefEpsonMarkWidthMm.value = prefs.epsonMarkWidthMm;
+  els.prefEpsonMarkHeightMm.value = prefs.epsonMarkHeightMm;
+  els.prefEpsonMarkGapMm.value = prefs.epsonMarkGapMm;
   els.prefFilename.value = prefs.filename;
   els.prefAccentColor.value = prefs.accentColor;
   els.prefAccentValue.textContent = prefs.accentColor;
@@ -107,6 +139,12 @@ function readPanel() {
     padding: String(Math.max(0, Math.min(20, Number(els.prefPadding.value) || 0))),
     quality: els.prefQuality.value,
     cutGuides: els.prefCutGuides.checked,
+    epsonMarks: els.prefEpsonMarks.checked,
+    epsonMarksTopMm: Math.max(0, Math.min(50, Number(els.prefEpsonMarksTopMm.value) || FACTORY_DEFAULTS.epsonMarksTopMm)),
+    epsonMarksLeftMm: Math.max(0, Math.min(50, Number(els.prefEpsonMarksLeftMm.value) || FACTORY_DEFAULTS.epsonMarksLeftMm)),
+    epsonMarkWidthMm: Math.max(0.1, Math.min(20, Number(els.prefEpsonMarkWidthMm.value) || FACTORY_DEFAULTS.epsonMarkWidthMm)),
+    epsonMarkHeightMm: Math.max(0.1, Math.min(10, Number(els.prefEpsonMarkHeightMm.value) || FACTORY_DEFAULTS.epsonMarkHeightMm)),
+    epsonMarkGapMm: Math.max(0, Math.min(20, Number(els.prefEpsonMarkGapMm.value) || FACTORY_DEFAULTS.epsonMarkGapMm)),
     filename: els.prefFilename.value.trim() || FACTORY_DEFAULTS.filename,
     accentColor: els.prefAccentColor.value,
     blob: els.prefBlob.checked,

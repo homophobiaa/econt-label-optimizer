@@ -13,3 +13,12 @@ export const QUALITY_STEP = {
   balanced: 1,
   high: 1,
 };
+
+// Epson color maintenance marks — tiny CMY blocks printed at the top-left of
+// every page so color nozzles get exercised on each print job.
+export const EPSON_MAINTENANCE_MARKS_DEFAULT_ENABLED = true;
+export const EPSON_MAINTENANCE_MARKS_TOP_MM = 2;
+export const EPSON_MAINTENANCE_MARKS_LEFT_MM = 2;
+export const EPSON_MAINTENANCE_MARK_WIDTH_MM = 2;
+export const EPSON_MAINTENANCE_MARK_HEIGHT_MM = 0.3;
+export const EPSON_MAINTENANCE_MARK_GAP_MM = 0.6;
