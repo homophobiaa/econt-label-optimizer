@@ -1,9 +1,9 @@
-import { A4_HEIGHT, A4_WIDTH } from "../config/constants.js";
+import { A4_HEIGHT, A4_WIDTH, MM_TO_PT } from "../config/constants.js";
 import { PDFDocument, rgb } from "../lib/pdf.js";
 import { els, state } from "../state/app-state.js";
 import { getPdfBytes } from "./file-io.js";
 import { getLayoutConfig, setBusy, setStatus, updateSummary } from "../ui/render.js";
-import { getSavedFilename, getSavedAdvanced } from "../ui/preferences.js";
+import { getSavedFilename, getSavedAdvanced, getSavedEpsonMarksConfig } from "../ui/preferences.js";
 
 const GUIDE_COLOR = rgb(0.56, 0.56, 0.56);
 const GUIDE_THICKNESS = 0.8;
@@ -49,8 +49,7 @@ function drawScissorsMark(page, centerX, centerY) {
   });
 }
 
-function drawCutGuides(page, layout, margin, gutter, cellWidth, cellHeight) {
-  for (let col = 1; col < layout.cols; col += 1) {
+function drawCutGuides(page, layout, margin, gutter, cellWidth, cellHeight) {  for (let col = 1; col < layout.cols; col += 1) {
     const x = margin + col * cellWidth + (col - 0.5) * gutter;
 
     page.drawLine({
@@ -81,6 +80,32 @@ function drawCutGuides(page, layout, margin, gutter, cellWidth, cellHeight) {
   }
 }
 
+function drawEpsonMaintenanceMarks(page, config) {
+  const topPt = config.topMm * MM_TO_PT;
+  const leftPt = config.leftMm * MM_TO_PT;
+  const widthPt = config.widthMm * MM_TO_PT;
+  const heightPt = config.heightMm * MM_TO_PT;
+  const gapPt = config.gapMm * MM_TO_PT;
+  // PDF y-origin is at the bottom; subtract from page top to position marks.
+  const y = A4_HEIGHT - topPt - heightPt;
+
+  const colors = [
+    rgb(0, 1, 1),  // Cyan
+    rgb(1, 0, 1),  // Magenta
+    rgb(1, 1, 0),  // Yellow
+  ];
+
+  colors.forEach((color, i) => {
+    page.drawRectangle({
+      x: leftPt + i * (widthPt + gapPt),
+      y,
+      width: widthPt,
+      height: heightPt,
+      color,
+    });
+  });
+}
+
 export async function generateOptimizedPdf({ print = false } = {}) {
   const printableLabels = state.labels.filter((label) => label.cropBox);
   if (!printableLabels.length) {
@@ -95,6 +120,8 @@ export async function generateOptimizedPdf({ print = false } = {}) {
     const output = await PDFDocument.create();
     const layout = getLayoutConfig();
     const showCutGuides = Boolean(els.cutGuidesToggle?.checked);
+    const showEpsonMarks = Boolean(els.epsonMarksToggle?.checked);
+    const epsonConfig = getSavedEpsonMarksConfig();
     const advanced = getSavedAdvanced();
     const margin = advanced.marginPt;
     const gutter = advanced.gutterPt;
@@ -114,6 +141,10 @@ export async function generateOptimizedPdf({ print = false } = {}) {
 
       if (showCutGuides) {
         drawCutGuides(page, layout, margin, gutter, cellWidth, cellHeight);
+      }
+
+      if (showEpsonMarks) {
+        drawEpsonMaintenanceMarks(page, epsonConfig);
       }
 
       for (let index = 0; index < chunk.length; index += 1) {
