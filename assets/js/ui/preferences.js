@@ -1,6 +1,19 @@
 import { els } from "../state/app-state.js";
 import { updateSummary } from "./render.js";
 import {
+  DEFAULT_LAYOUT,
+  DEFAULT_PADDING,
+  DEFAULT_QUALITY,
+  DEFAULT_CUT_GUIDES,
+  DEFAULT_FILENAME,
+  DEFAULT_ACCENT_COLOR,
+  DEFAULT_BLOB,
+  DEFAULT_GRID,
+  DEFAULT_ANIMATIONS,
+  DEFAULT_WHITE_THRESHOLD,
+  DEFAULT_MARGIN_PT,
+  DEFAULT_GUTTER_PT,
+  DEFAULT_DEV_CONSOLE,
   EPSON_MAINTENANCE_MARKS_DEFAULT_ENABLED,
   EPSON_MAINTENANCE_MARKS_TOP_MM,
   EPSON_MAINTENANCE_MARKS_LEFT_MM,
@@ -12,25 +25,25 @@ import {
 const STORAGE_KEY = "econt-label-prefs";
 
 const FACTORY_DEFAULTS = {
-  layout: "4",
-  padding: "4",
-  quality: "balanced",
-  cutGuides: true,
+  layout: DEFAULT_LAYOUT,
+  padding: DEFAULT_PADDING,
+  quality: DEFAULT_QUALITY,
+  cutGuides: DEFAULT_CUT_GUIDES,
   epsonMarks: EPSON_MAINTENANCE_MARKS_DEFAULT_ENABLED,
   epsonMarksTopMm: EPSON_MAINTENANCE_MARKS_TOP_MM,
   epsonMarksLeftMm: EPSON_MAINTENANCE_MARKS_LEFT_MM,
   epsonMarkWidthMm: EPSON_MAINTENANCE_MARK_WIDTH_MM,
   epsonMarkHeightMm: EPSON_MAINTENANCE_MARK_HEIGHT_MM,
   epsonMarkGapMm: EPSON_MAINTENANCE_MARK_GAP_MM,
-  filename: "optimized-econt-labels",
-  accentColor: "#34d058",
-  blob: true,
-  grid: true,
-  animations: true,
-  whiteThreshold: 245,
-  marginPt: 18,
-  gutterPt: 10,
-  devConsole: false,
+  filename: DEFAULT_FILENAME,
+  accentColor: DEFAULT_ACCENT_COLOR,
+  blob: DEFAULT_BLOB,
+  grid: DEFAULT_GRID,
+  animations: DEFAULT_ANIMATIONS,
+  whiteThreshold: DEFAULT_WHITE_THRESHOLD,
+  marginPt: DEFAULT_MARGIN_PT,
+  gutterPt: DEFAULT_GUTTER_PT,
+  devConsole: DEFAULT_DEV_CONSOLE,
 };
 
 function load() {
@@ -136,7 +149,7 @@ function populatePanel(prefs) {
 function readPanel() {
   return {
     layout: els.prefLayout.value,
-    padding: String(Math.max(0, Math.min(20, Number(els.prefPadding.value) || 0))),
+    padding: String(Math.max(0, Math.min(20, Number(els.prefPadding.value) || Number(FACTORY_DEFAULTS.padding)))),
     quality: els.prefQuality.value,
     cutGuides: els.prefCutGuides.checked,
     epsonMarks: els.prefEpsonMarks.checked,
@@ -150,9 +163,9 @@ function readPanel() {
     blob: els.prefBlob.checked,
     grid: els.prefGrid.checked,
     animations: els.prefAnimations.checked,
-    whiteThreshold: Math.max(200, Math.min(255, Number(els.prefWhiteThreshold.value) || 245)),
-    marginPt: Math.max(0, Math.min(72, Number(els.prefMarginPt.value) || 18)),
-    gutterPt: Math.max(0, Math.min(40, Number(els.prefGutterPt.value) || 10)),
+    whiteThreshold: Math.max(200, Math.min(255, Number(els.prefWhiteThreshold.value) || FACTORY_DEFAULTS.whiteThreshold)),
+    marginPt: Math.max(0, Math.min(72, Number(els.prefMarginPt.value) || FACTORY_DEFAULTS.marginPt)),
+    gutterPt: Math.max(0, Math.min(40, Number(els.prefGutterPt.value) || FACTORY_DEFAULTS.gutterPt)),
     devConsole: els.prefDevConsole.checked,
   };
 }
